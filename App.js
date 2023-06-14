@@ -1,20 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomeScreen from "./screens/HomeScreen";
+import AddNotesScreen from "./screens/AddNotesScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const StackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen />
+      <Stack.Screen />
+    </Stack.Navigator>
+  );
+};
 
 export default function App() {
+  const [notes, setNotes] = useState([]);
+
+  function addNoteHandler(title, content) {
+    setNotes((currentNotes) => [
+      ...currentNotes,
+      { noteTitle: title, noteContent: content, id: Math.random().toString() },
+    ]);
+
+    console.log(notes);
+  }
+
+  function deleteNoteHandler(id) {
+    setNotes((currentNotes) => {
+      return currentNotes.filter((note) => note.id !== id);
+    });
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar style="dark" />
+      <NavigationContainer>
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen name="Home">
+            {(props) => (
+              <HomeScreen
+                {...props}
+                notes={notes}
+                deleteNoteHandler={deleteNoteHandler}
+              />
+            )}
+          </Tab.Screen>
+          <Tab.Screen name="Add">
+            {(props) => <AddNotesScreen {...props} addNote={addNoteHandler} />}
+          </Tab.Screen>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
