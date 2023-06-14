@@ -1,12 +1,23 @@
-import { View, Text, StyleSheet, Pressable, Button } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NoteItem({ item, deleteItem }) {
+  const navigation = useNavigation();
+
+  function viewNoteDetails() {
+    navigation.navigate("NoteDetails", {
+      title: item.noteTitle,
+      content: item.noteContent,
+    });
+  }
+
   return (
     <View style={styles.noteItem}>
       <Pressable
         android_ripple={{ color: "#210644" }}
+        onPress={viewNoteDetails}
         style={({ pressed }) => pressed && styles.pressedItem}
       >
         <Text style={styles.noteTitle}>{item.noteTitle}</Text>

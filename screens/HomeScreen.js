@@ -1,5 +1,4 @@
 import { View, Text, SafeAreaView, StyleSheet, FlatList } from "react-native";
-import React, { useState } from "react";
 import NoteItem from "../components/NoteItem";
 
 export default function HomeScreen({ notes, deleteNoteHandler }) {
@@ -8,7 +7,7 @@ export default function HomeScreen({ notes, deleteNoteHandler }) {
       <View style={styles.all}>
         <Text style={styles.allText}>All notes</Text>
       </View>
-      <View>
+      <View style={styles.list}>
         <FlatList
           keyExtractor={(item, index) => {
             return item.id;
@@ -37,5 +36,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "green",
+  },
+  list: {
+    flex: 1,
   },
 });

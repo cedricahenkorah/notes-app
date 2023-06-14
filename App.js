@@ -1,20 +1,30 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/HomeScreen";
 import AddNotesScreen from "./screens/AddNotesScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import NotesDetails from "./screens/NotesDetails";
+import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-const StackNavigator = () => {
+const HomeStack = ({ notes, deleteNoteHandler }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen />
-      <Stack.Screen />
+      <Stack.Screen name="Home">
+        {(props) => (
+          <HomeScreen
+            {...props}
+            notes={notes}
+            deleteNoteHandler={deleteNoteHandler}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="NoteDetails" component={NotesDetails} />
     </Stack.Navigator>
   );
 };
@@ -41,17 +51,33 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-          <Tab.Screen name="Home">
+        <Tab.Navigator
+          screenOptions={{ headerShown: false, tabBarActiveTintColor: "green" }}
+        >
+          <Tab.Screen
+            name="HomeTab"
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="home" size={size} color={color} />
+              ),
+            }}
+          >
             {(props) => (
-              <HomeScreen
+              <HomeStack
                 {...props}
                 notes={notes}
                 deleteNoteHandler={deleteNoteHandler}
               />
             )}
           </Tab.Screen>
-          <Tab.Screen name="Add">
+          <Tab.Screen
+            name="Add"
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="add" size={size} color={color} />
+              ),
+            }}
+          >
             {(props) => <AddNotesScreen {...props} addNote={addNoteHandler} />}
           </Tab.Screen>
         </Tab.Navigator>
