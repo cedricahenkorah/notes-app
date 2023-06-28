@@ -21,20 +21,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#f1f5f9",
   },
   titleContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    borderBottomWidth: 2,
   },
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 10,
-    color: "green",
+    marginBottom: 5,
+    // color: "green",
   },
   contentContainer: {
-    paddingTop: 20,
+    paddingTop: 10,
     // borderTopWidth: 2,
   },
   content: {

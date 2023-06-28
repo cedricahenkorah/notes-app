@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 const HomeStack = ({ notes, deleteNoteHandler }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home">
+      <Stack.Screen name="HomeTab" options={{ headerShown: false }}>
         {(props) => (
           <HomeScreen
             {...props}
@@ -55,7 +55,7 @@ export default function App() {
           screenOptions={{ headerShown: false, tabBarActiveTintColor: "green" }}
         >
           <Tab.Screen
-            name="HomeTab"
+            name="Home"
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="home" size={size} color={color} />
